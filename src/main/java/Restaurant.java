@@ -17,6 +17,10 @@ public class Restaurant {
         this.closingTime = closingTime;
     }
 
+    public int calculateOrderTotal(ArrayList<String> orderItems) {
+        return -1;
+    }
+
     public boolean isRestaurantOpen() {
         LocalTime timeNow = this.getCurrentTime();
         if(timeNow.isAfter(this.openingTime) && timeNow.isBefore(closingTime)) {

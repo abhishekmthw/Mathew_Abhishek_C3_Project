@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,6 +25,32 @@ class RestaurantTest {
         restaurant.addToMenu("Sweet corn soup",119);
         restaurant.addToMenu("Vegetable lasagne", 269);
     }
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>ORDER TOTAL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+    @Test
+    public void calculate_order_total_should_return_correct_amount() {
+        ArrayList<String> orderItems = new ArrayList<String>();
+        orderItems.add("Sweet corn soup");
+        orderItems.add("Vegetable lasagne");
+        assertEquals(388, restaurant.calculateOrderTotal(orderItems));
+    }
+
+    @Test
+    public void calculate_order_total_should_return_zero_when_no_items_are_selected() {
+        ArrayList<String> orderItems = new ArrayList<String>();
+        assertEquals(0, restaurant.calculateOrderTotal(orderItems));
+    }
+
+    @Test
+    public void calculate_order_total_should_throw_exception_when_item_is_not_listed() throws itemNotFoundException {
+        ArrayList<String> orderItems = new ArrayList<String>();
+        orderItems.add("Sweet corn soup");
+        orderItems.add("French fries");
+        assertThrows(itemNotFoundException.class, ()->restaurant.calculateOrderTotal(orderItems));
+    }
+
+    //>>>>>>>>>>>>>>>>>>>>>>>>>ORDER TOTAL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     //>>>>>>>>>>>>>>>>>>>>>>>>>OPEN/CLOSED<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     @Test
@@ -57,9 +84,8 @@ class RestaurantTest {
         assertEquals(initialMenuSize-1,restaurant.getMenu().size());
     }
     @Test
-    public void removing_item_that_does_not_exist_should_throw_exception() {
-        assertThrows(itemNotFoundException.class,
-                ()->restaurant.removeFromMenu("French fries"));
+    public void removing_item_that_does_not_exist_should_throw_exception() throws itemNotFoundException {
+        assertThrows(itemNotFoundException.class, ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
