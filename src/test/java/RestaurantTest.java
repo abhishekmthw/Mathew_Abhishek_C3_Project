@@ -29,7 +29,7 @@ class RestaurantTest {
     //>>>>>>>>>>>>>>>>>>>>>>>>>ORDER TOTAL<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
     @Test
-    public void calculate_order_total_should_return_correct_amount() {
+    public void calculate_order_total_should_return_correct_amount() throws itemNotFoundException  {
         ArrayList<String> orderItems = new ArrayList<String>();
         orderItems.add("Sweet corn soup");
         orderItems.add("Vegetable lasagne");
@@ -37,7 +37,7 @@ class RestaurantTest {
     }
 
     @Test
-    public void calculate_order_total_should_return_zero_when_no_items_are_selected() {
+    public void calculate_order_total_should_return_zero_when_no_items_are_selected() throws itemNotFoundException  {
         ArrayList<String> orderItems = new ArrayList<String>();
         assertEquals(0, restaurant.calculateOrderTotal(orderItems));
     }

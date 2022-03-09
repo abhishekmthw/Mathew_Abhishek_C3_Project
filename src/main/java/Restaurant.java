@@ -17,8 +17,26 @@ public class Restaurant {
         this.closingTime = closingTime;
     }
 
-    public int calculateOrderTotal(ArrayList<String> orderItems) {
-        return -1;
+    public int calculateOrderTotal(ArrayList<String> orderItems) throws itemNotFoundException {
+        if(orderItems.size() == 0) {
+            return 0;
+        }
+        int orderTotal = 0;
+        ArrayList<String> menuItems = new ArrayList<String>();
+        for(Item menuItem: this.menu) {
+            menuItems.add(menuItem.getName());
+        }
+        for(String orderItem: orderItems) {
+            if(!menuItems.contains(orderItem)) {
+                throw new itemNotFoundException(orderItem);
+            }
+        }
+        for(Item item: this.menu) {
+            if(orderItems.contains(item.getName())) {
+                orderTotal += item.getPrice();
+            }
+        }
+        return orderTotal;
     }
 
     public boolean isRestaurantOpen() {
